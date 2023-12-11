@@ -1,0 +1,1 @@
+npx static-server
