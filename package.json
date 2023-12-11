@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "start": "serve"
+    "start": "serve",
+    "format": "prettier --write ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "prettier": "3.1.1",
     "serve": "^14.2.1"
   }
 }
