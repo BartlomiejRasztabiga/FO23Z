@@ -12,7 +12,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     cr,
     ci,
   ) {
-    this.fractalType = fractalType || "mandlebrot";
+    this.fractalType = fractalType;
     this.numWorkers = numWorkers;
     this._workers = [];
     this._colorController = colorController;
