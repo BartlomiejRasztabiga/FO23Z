@@ -17,6 +17,7 @@
 
   <script src="./Palettes.js"></script>
   <script src="./PaletteControl.js"></script>
+  <script src="./MaxIterControl.js"></script>
   <script src="./FractalLayer.js"></script>
 
   <style>
@@ -36,7 +37,7 @@
 <script type="text/javascript">
   const map = L.map("map", {minZoom: 1});
 
-  const numWorkers = 3;
+  const numWorkers = 5;
 
   // TODO add slider for param, numWorkers, maxIterations etc
 
@@ -98,7 +99,8 @@
 
   map
   .setView([0, -90], 2)
-  .addControl(new PaletteControl(layers, {position: "topleft"}));
+  .addControl(new PaletteControl(layers, {position: "topleft"}))
+  .addControl(new MaxIterControl(layers, {position: "topleft"}));
 </script>
 </body>
 </html>

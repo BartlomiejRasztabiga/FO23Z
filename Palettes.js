@@ -50,22 +50,7 @@ var paletteController = {
     },
     green: function (colorIndex) {
       return [0, Math.floor(colorIndex * 255), 0, 255];
-    },
-    candy: function (colorIndex) {
-      var i = Math.floor(colorIndex * 360) % 5;
-      switch (i) {
-        case 0:
-          return [30, 144, 255, 255];
-        case 1:
-          return [255, 64, 64, 255];
-        case 2:
-          return [173, 255, 47, 255];
-        case 3:
-          return [191, 239, 255, 255];
-        case 4:
-          return [154, 50, 205, 255];
-      }
-    },
+    }
   },
   addPalette: function (paletteName, paletteGenerator) {
     this._paletteGenerators[paletteName] = paletteGenerator;

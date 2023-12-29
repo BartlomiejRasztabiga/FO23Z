@@ -121,6 +121,16 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     }
   },
 
+  setMaxIter: function (maxIter) {
+    this.maxIter = maxIter;
+
+    this.queue.len = 0;
+    this.queue.tiles = [];
+    if (this._map) {
+      this.redraw();
+    }
+  },
+
   _sendPalette: function () {
     if (this._paletteSended || !this._workers.length || !this._paletteName) {
       return;
