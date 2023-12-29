@@ -1,105 +1,104 @@
 <!doctype html>
 <html>
-  <head>
-    <title>FO23Z</title>
+<head>
+  <title>FO23Z</title>
 
-<!--  leaflet 0.7.5 is the last one that works -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
+  <!--  leaflet 0.7.5 is the last one that works -->
+  <link
+      rel="stylesheet"
+      href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css"
+  />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
 
-<!--    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />-->
-<!--    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>-->
+  <!--    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />-->
+  <!--    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>-->
 
-    <link rel="stylesheet" href="./PaletteControl.css" />
+  <link rel="stylesheet" href="./PaletteControl.css"/>
 
-    <script src="./Palettes.js"></script>
-    <script src="./PaletteControl.js"></script>
-    <script src="./FractalLayer.js"></script>
+  <script src="./Palettes.js"></script>
+  <script src="./PaletteControl.js"></script>
+  <script src="./FractalLayer.js"></script>
 
-    <style>
-      body,
-      html,
-      #map {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-      }
-    </style>
-  </head>
+  <style>
+    body,
+    html,
+    #map {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+</head>
 
-  <body>
-    <div id="map"></div>
+<body>
+<div id="map"></div>
 
-    <script type="text/javascript">
-      const map = L.map("map", {minZoom: 1});
+<script type="text/javascript">
+  const map = L.map("map", {minZoom: 1});
 
-      const numWorkers = 3;
+  const numWorkers = 3;
 
-      // TODO add slider for param, numWorkers, maxIterations etc
+  // TODO add slider for param, numWorkers, maxIterations etc
 
-      const layers = {
-        "julia -0.74543+0.11301*i": L.tileLayer.fractalLayer(
-          paletteController,
-          numWorkers,
-          "julia",
-        ),
-        "julia -0.75+0.11*i": L.tileLayer.fractalLayer(
-          paletteController,
-          numWorkers,
-          "julia",
-          500,
-          -0.75,
-          0.11,
-        ),
-        "julia -0.1+0.651*i": L.tileLayer.fractalLayer(
-          paletteController,
-          numWorkers,
-          "julia",
-          500,
-          -0.1,
-          0.651,
-        ),
-        "julia -0.4+0.6*i": L.tileLayer.fractalLayer(
-          paletteController,
-          numWorkers,
-          "julia",
-          500,
-          -0.4,
-          0.6,
-        ),
-        "julia -0.8+0.156*i": L.tileLayer.fractalLayer(
-          paletteController,
-          numWorkers,
-          "julia",
-          500,
-          -0.8,
-          0.156,
-        ),
-        "julia -1.118484848+0.273636364*i": L.tileLayer.fractalLayer(
-          paletteController,
-          numWorkers,
-          "julia",
-          300,
-          -1.118484848,
-          0.273636364,
-        ),
-        "julia  -0.37+0.6*i": L.tileLayer.fractalLayer(
-          paletteController,
-          numWorkers,
-          "julia",
-          500,
-          -0.37,
-          0.6,
-        ),
-      };
+  const layers = {
+    "julia -0.74543+0.11301*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        500,
+        -0.74543,
+        0.11301,
+    ),
+    "julia -0.75+0.11*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        500,
+        -0.75,
+        0.11,
+    ),
+    "julia -0.1+0.651*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        500,
+        -0.1,
+        0.651,
+    ),
+    "julia -0.4+0.6*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        500,
+        -0.4,
+        0.6,
+    ),
+    "julia -0.8+0.156*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        500,
+        -0.8,
+        0.156,
+    ),
+    "julia -1.118484848+0.273636364*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        500,
+        -1.118484848,
+        0.273636364,
+    ),
+    "julia  -0.37+0.6*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        500,
+        -0.37,
+        0.6,
+    ),
+  };
 
-      L.control
-        .layers(layers, {}, { position: "topleft", collapsed: false })
-        .addTo(map);
+  L.control
+  .layers(layers, {}, {position: "topleft", collapsed: false})
+  .addTo(map);
 
-      map
-        .setView([0, -90], 2)
-        .addControl(new PaletteControl(layers, { position: "topleft" }));
-    </script>
-  </body>
+  map
+  .setView([0, -90], 2)
+  .addControl(new PaletteControl(layers, {position: "topleft"}));
+</script>
+</body>
 </html>

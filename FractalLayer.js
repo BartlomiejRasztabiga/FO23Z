@@ -4,24 +4,16 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     maxZoom: 23,
     continuousWorld: true,
   },
-  initialize: function (
-    colorController,
-    numWorkers,
-    fractalType,
-    maxIter,
-    cr,
-    ci,
-  ) {
-    this.fractalType = fractalType;
+  initialize: function (colorController, numWorkers, maxIter, cr, ci) {
     this.numWorkers = numWorkers;
     this._workers = [];
     this._colorController = colorController;
 
     this.messages = {};
-    this.queue = { total: numWorkers };
-    this.cr = cr || -0.74543;
-    this.ci = ci || 0.11301;
-    this.maxIter = maxIter || 500;
+    this.queue = {total: numWorkers};
+    this.cr = cr;
+    this.ci = ci;
+    this.maxIter = maxIter;
     this._paletteName = null;
     this._paletteSended = false;
   },
@@ -71,8 +63,8 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 
     this.on("tileunload", function (e) {
       if (e.tile._tileIndex) {
-        var pos = e.tile._tileIndex,
-          tileID = [pos.x, pos.y, pos.z].join(":");
+        var pos = e.tile._tileIndex
+        var tileID = [pos.x, pos.y, pos.z].join(":");
         if (tileID in _this.messages) {
           delete _this.messages[tileID];
         }
@@ -80,12 +72,12 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     });
 
     map.on(
-      "zoomstart",
-      function () {
-        this.queue.len = 0;
-        this.queue.tiles = [];
-      },
-      this,
+        "zoomstart",
+        function () {
+          this.queue.len = 0;
+          this.queue.tiles = [];
+        },
+        this,
     );
 
     return L.TileLayer.Canvas.prototype.onAdd.call(this, map);
@@ -134,18 +126,18 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
       return;
     }
 
-    var palette = this._colorController.getPaletteAsBuffer(
-      this._paletteName,
-      this.maxIter,
+    const palette = this._colorController.getPaletteAsBuffer(
+        this._paletteName,
+        this.maxIter,
     );
     for (var w = 0; w < this.numWorkers; w++) {
-      var paletteClone = palette.slice(0);
+      const paletteClone = palette.slice(0);
       this._workers[w].postMessage(
-        {
-          command: "palette",
-          palette: paletteClone,
-        },
-        [paletteClone],
+          {
+            command: "palette",
+            palette: paletteClone,
+          },
+          [paletteClone],
       );
     }
 
@@ -153,9 +145,9 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
   },
 
   _renderTile: function (canvas, tilePoint, workerID) {
-    var z = this._map.getZoom();
-    canvas._tileIndex = { x: tilePoint.x, y: tilePoint.y, z: z };
-    var tileID = tilePoint.x + ":" + tilePoint.y + ":" + z;
+    const z = this._map.getZoom();
+    canvas._tileIndex = {x: tilePoint.x, y: tilePoint.y, z: z};
+    const tileID = tilePoint.x + ":" + tilePoint.y + ":" + z;
     this.messages[tileID] = canvas;
     this._workers[workerID].postMessage({
       command: "render",
@@ -167,24 +159,6 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
       cr: this.cr,
       ci: this.ci,
       maxIter: this.maxIter,
-      type: this.fractalType,
     });
   },
 });
-L.tileLayer.fractalLayer = function (
-  colorController,
-  numWorkers,
-  t,
-  mi,
-  cr,
-  ci,
-) {
-  return new L.TileLayer.FractalLayer(
-    colorController,
-    numWorkers,
-    t,
-    mi,
-    cr,
-    ci,
-  );
-};
