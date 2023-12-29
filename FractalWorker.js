@@ -2,6 +2,7 @@ var palette = null;
 
 //functions return number from 0 to (maxIter-1)
 function julia(cx, cy, maxIter, cr, ci) {
+  // TODO jakie to ma znaczenie skoro zwracane jest iter?
   let iter;
   let xn;
   let yn;
