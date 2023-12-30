@@ -4,7 +4,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     maxZoom: 23,
     continuousWorld: true,
   },
-  initialize: function (colorController, numWorkers, maxIter, cr, ci) {
+  initialize: function (colorController, numWorkers, cr, ci) {
     this.numWorkers = numWorkers;
     this._workers = [];
     this._colorController = colorController;
@@ -13,14 +13,14 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     this.queue = {total: numWorkers};
     this.cr = cr;
     this.ci = ci;
-    this.maxIter = maxIter;
+    this.maxIter = 500;
     this._paletteName = null;
-    this._paletteSended = false;
+    this._paletteSent = false;
   },
   onAdd: function (map) {
-    var _this = this;
-    var i = 0;
-    var next;
+    const _this = this; // TODO potrzebne?
+    let i = 0;
+    let next;
     this.queue.free = [];
     this.queue.len = 0;
     this.queue.tiles = [];
@@ -84,14 +84,14 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
   },
   onRemove: function (map) {
     this.messages = {};
-    var len = this._workers.length;
-    var i = 0;
+    const len = this._workers.length;
+    let i = 0;
     while (i < len) {
       this._workers[i].terminate();
       i++;
     }
     this._workers = [];
-    this._paletteSended = false;
+    this._paletteSent = false;
     return L.TileLayer.Canvas.prototype.onRemove.call(this, map);
   },
 
@@ -111,7 +111,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
   setPalette: function (paletteName) {
     this._paletteName = paletteName;
 
-    this._paletteSended = false;
+    this._paletteSent = false;
     this._sendPalette();
 
     this.queue.len = 0;
@@ -131,8 +131,9 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     }
   },
 
+  // TODO po co?
   _sendPalette: function () {
-    if (this._paletteSended || !this._workers.length || !this._paletteName) {
+    if (this._paletteSent || !this._workers.length || !this._paletteName) {
       return;
     }
 
@@ -140,7 +141,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
         this._paletteName,
         this.maxIter,
     );
-    for (var w = 0; w < this.numWorkers; w++) {
+    for (let w = 0; w < this.numWorkers; w++) {
       const paletteClone = palette.slice(0);
       this._workers[w].postMessage(
           {
@@ -151,7 +152,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
       );
     }
 
-    this._paletteSended = true;
+    this._paletteSent = true;
   },
 
   _renderTile: function (canvas, tilePoint, workerID) {

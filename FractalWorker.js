@@ -11,6 +11,8 @@ function julia(cx, cy, maxIter, cr, ci) {
   for (iter = 0; iter < maxIter; iter++) {
     xn = x * x - y * y + cr;
     yn = x * y * 2 + ci;
+
+    // TODO po co to?
     if (xn * xn + yn * yn > 4) {
       break;
     }
@@ -23,7 +25,7 @@ function julia(cx, cy, maxIter, cr, ci) {
 
 const commands = {
   palette: function (data, cb) {
-    palette = new Uint32Array(data.palette);
+    palette = new Uint32Array(data.palette); // TODO po co? czy mjest palette
   },
   render: function (data, cb) {
     if (!palette) {
