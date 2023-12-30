@@ -2,16 +2,16 @@ var PaletteControl = L.Control.extend({
   options: {
     initPalette: "hsv",
   },
-  initialize: function (fractalLayers, options) {
+  initialize: function (canvas, options) {
     L.setOptions(this, options);
-    this._fractalLayers = fractalLayers;
+    this._canvas = canvas;
   },
 
   onAdd: function (map) {
     // create the control container with a particular class name
     var container = L.DomUtil.create(
-      "div",
-      "leaflet-control-layers leaflet-control-layers-expanded",
+        "div",
+        "leaflet-control-layers leaflet-control-layers-expanded",
     );
     var _this = this;
 
@@ -24,9 +24,9 @@ var PaletteControl = L.Control.extend({
 
     paletteController.forEach(function (paletteName) {
       var paletteButton = L.DomUtil.create(
-        "button",
-        "fractal-palette-button",
-        buttonsContainer,
+          "button",
+          "fractal-palette-button",
+          buttonsContainer,
       );
       paletteButton.innerHTML = paletteName;
       paletteButton.paletteName = paletteName;
@@ -55,8 +55,6 @@ var PaletteControl = L.Control.extend({
       }
     });
 
-    for (var l in this._fractalLayers) {
-      this._fractalLayers[l].setPalette(activePaletteName);
-    }
+    this._canvas.setPalette(activePaletteName);
   },
 });

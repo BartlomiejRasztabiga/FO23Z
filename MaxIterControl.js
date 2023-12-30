@@ -2,16 +2,16 @@ const MaxIterControl = L.Control.extend({
   options: {
     initMaxIter: 500,
   },
-  initialize: function (fractalLayers, options) {
+  initialize: function (canvas, options) {
     L.setOptions(this, options);
-    this._fractalLayers = fractalLayers;
+    this._canvas = canvas;
   },
 
   onAdd: function (map) {
     // create the control container with a particular class name
     const container = L.DomUtil.create(
-      "div",
-      "leaflet-control-layers leaflet-control-layers-expanded",
+        "div",
+        "leaflet-control-layers leaflet-control-layers-expanded",
     );
 
     const title = document.createElement("span");
@@ -22,12 +22,12 @@ const MaxIterControl = L.Control.extend({
     input.value = this.options.initMaxIter;
 
     L.DomEvent.on(
-      input,
-      "change",
-      function () {
-        this._update(input.value);
-      },
-      this,
+        input,
+        "change",
+        function () {
+          this._update(input.value);
+        },
+        this,
     );
 
     container.appendChild(title);
@@ -37,9 +37,6 @@ const MaxIterControl = L.Control.extend({
   },
 
   _update: function (maxIter) {
-    console.log(maxIter);
-    for (const l in this._fractalLayers) {
-      this._fractalLayers[l].setMaxIter(maxIter);
-    }
+    this._canvas.setMaxIter(maxIter);
   },
 });

@@ -3,16 +3,16 @@ const NumberControl = L.Control.extend({
     initRe: 0,
     initIm: 0,
   },
-  initialize: function (fractalLayers, options) {
+  initialize: function (canvas, options) {
     L.setOptions(this, options);
-    this._fractalLayers = fractalLayers;
+    this._canvas = canvas;
   },
 
   onAdd: function (map) {
     // create the control container with a particular class name
     const container = L.DomUtil.create(
-      "div",
-      "leaflet-control-layers leaflet-control-layers-expanded flex",
+        "div",
+        "leaflet-control-layers leaflet-control-layers-expanded flex",
     );
 
     const title = document.createElement("span");
@@ -23,12 +23,12 @@ const NumberControl = L.Control.extend({
     inputRe.value = this.options.initRe;
 
     L.DomEvent.on(
-      inputRe,
-      "change",
-      function () {
-        this._update(inputRe.value, "re");
-      },
-      this,
+        inputRe,
+        "change",
+        function () {
+          this._update(inputRe.value, "re");
+        },
+        this,
     );
 
     const inputIm = document.createElement("input");
@@ -36,12 +36,12 @@ const NumberControl = L.Control.extend({
     inputIm.value = this.options.initIm;
 
     L.DomEvent.on(
-      inputIm,
-      "change",
-      function () {
-        this._update(inputIm.value, "im");
-      },
-      this,
+        inputIm,
+        "change",
+        function () {
+          this._update(inputIm.value, "im");
+        },
+        this,
     );
 
     container.appendChild(title);
@@ -49,34 +49,34 @@ const NumberControl = L.Control.extend({
     container.appendChild(inputIm);
 
     const predefined = [
-      { re: -0.74543, im: 0.11301 },
-      { re: -0.75, im: 0.11 },
-      { re: -0.1, im: 0.651 },
-      { re: -0.4, im: 0.6 },
-      { re: -0.8, im: 0.156 },
-      { re: -1.118484848, im: 0.273636364 },
-      { re: -0.37, im: 0.6 },
+      {re: -0.74543, im: 0.11301},
+      {re: -0.75, im: 0.11},
+      {re: -0.1, im: 0.651},
+      {re: -0.4, im: 0.6},
+      {re: -0.8, im: 0.156},
+      {re: -1.118484848, im: 0.273636364},
+      {re: -0.37, im: 0.6},
     ];
 
     const _this = this;
 
     predefined.forEach(function (p) {
       const predefinedJulia = L.DomUtil.create(
-        "button",
-        "fractal-palette-button",
+          "button",
+          "fractal-palette-button",
       );
       predefinedJulia.innerHTML = `${p.re} + ${p.im}i`;
       predefinedJulia.re = p.re;
       predefinedJulia.im = p.im;
 
       L.DomEvent.on(
-        predefinedJulia,
-        "click",
-        function () {
-          _this._update(predefinedJulia.re, "re");
-          _this._update(predefinedJulia.im, "im");
-        },
-        _this,
+          predefinedJulia,
+          "click",
+          function () {
+            _this._update(predefinedJulia.re, "re");
+            _this._update(predefinedJulia.im, "im");
+          },
+          _this,
       );
       container.appendChild(predefinedJulia);
     });
@@ -85,12 +85,10 @@ const NumberControl = L.Control.extend({
   },
 
   _update: function (value, type) {
-    for (const l in this._fractalLayers) {
-      if (type === "re") {
-        this._fractalLayers[l].setCr(+value);
-      } else {
-        this._fractalLayers[l].setCi(+value);
-      }
+    if (type === "re") {
+      this._canvas.setCr(+value);
+    } else {
+      this._canvas.setCi(+value);
     }
   },
 });

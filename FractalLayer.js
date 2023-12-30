@@ -4,15 +4,15 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     maxZoom: 23,
     continuousWorld: true,
   },
-  initialize: function (colorController, numWorkers, cr, ci) {
+  initialize: function (colorController, numWorkers) {
     this.numWorkers = numWorkers;
     this._workers = [];
     this._colorController = colorController;
 
     this.messages = {};
     this.queue = { total: numWorkers };
-    this.cr = cr;
-    this.ci = ci;
+    this.cr = 0;
+    this.ci = 0;
     this.maxIter = 500;
     this._paletteName = null;
     this._paletteSent = false;
