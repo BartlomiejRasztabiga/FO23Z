@@ -10,8 +10,8 @@ const MaxIterControl = L.Control.extend({
   onAdd: function (map) {
     // create the control container with a particular class name
     const container = L.DomUtil.create(
-        "div",
-        "leaflet-control-layers leaflet-control-layers-expanded",
+      "div",
+      "leaflet-control-layers leaflet-control-layers-expanded",
     );
 
     const title = document.createElement("span");
@@ -21,14 +21,19 @@ const MaxIterControl = L.Control.extend({
     input.type = "number";
     input.value = this.options.initMaxIter;
 
-    L.DomEvent.on(input, "change", function () {
-      this._update(input.value);
-    }, this);
+    L.DomEvent.on(
+      input,
+      "change",
+      function () {
+        this._update(input.value);
+      },
+      this,
+    );
 
     container.appendChild(title);
     container.appendChild(input);
 
-    return container
+    return container;
   },
 
   _update: function (maxIter) {

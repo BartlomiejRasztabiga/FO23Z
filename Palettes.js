@@ -50,7 +50,7 @@ var paletteController = {
     },
     green: function (colorIndex) {
       return [0, Math.floor(colorIndex * 255), 0, 255];
-    }
+    },
   },
   addPalette: function (paletteName, paletteGenerator) {
     this._paletteGenerators[paletteName] = paletteGenerator;
