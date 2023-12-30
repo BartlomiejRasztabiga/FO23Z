@@ -34,28 +34,40 @@ const NumberControl = L.Control.extend({
       this._update(inputIm.value, "im");
     }, this);
 
-    // TODO make generic
-    const predefinedJulia = L.DomUtil.create("button", "fractal-palette-button");
-    predefinedJulia.innerHTML = "-0.75 + 0.11i";
-    predefinedJulia.re = -0.75;
-    predefinedJulia.im = 0.11;
-
-    L.DomEvent.on(predefinedJulia, "click", function () {
-      this._update(predefinedJulia.re, "re");
-      this._update(predefinedJulia.im, "im");
-    }, this);
-
     container.appendChild(title);
     container.appendChild(inputRe);
     container.appendChild(inputIm);
-    container.appendChild(predefinedJulia);
+
+    const predefined = [
+      {re: -0.74543, im: 0.11301},
+      {re: -0.75, im: 0.11},
+      {re: -0.1, im: 0.651},
+      {re: -0.4, im: 0.6},
+      {re: -0.8, im: 0.156},
+      {re: -1.118484848, im: 0.273636364},
+      {re: -0.37, im: 0.6},
+    ]
+
+    const _this = this;
+
+    predefined.forEach(function (p) {
+      const predefinedJulia = L.DomUtil.create("button",
+          "fractal-palette-button");
+      predefinedJulia.innerHTML = `${p.re} + ${p.im}i`;
+      predefinedJulia.re = p.re;
+      predefinedJulia.im = p.im;
+
+      L.DomEvent.on(predefinedJulia, "click", function () {
+        _this._update(predefinedJulia.re, "re");
+        _this._update(predefinedJulia.im, "im");
+      }, _this);
+      container.appendChild(predefinedJulia);
+    })
 
     return container
   },
 
   _update: function (value, type) {
-    console.log(value);
-    console.log(type);
     for (const l in this._fractalLayers) {
       if (type === "re") {
         this._fractalLayers[l].setCr(+value);
