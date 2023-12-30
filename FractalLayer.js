@@ -18,7 +18,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     this._paletteSent = false;
   },
   onAdd: function (map) {
-    const _this = this; // TODO potrzebne?
+    const _this = this;
     let i = 0;
     let next;
     this.queue.free = [];

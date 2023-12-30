@@ -60,12 +60,12 @@ var paletteController = {
       return;
     }
 
-    var generator = this._paletteGenerators[paletteName];
+    const generator = this._paletteGenerators[paletteName];
 
-    var res = new Array(numIndexes + 1);
+    const res = new Array(numIndexes + 1);
 
-    for (var c = 0; c < numIndexes + 1; c++) {
-      var color = generator(c / numIndexes);
+    for (let c = 0; c < numIndexes + 1; c++) {
+      const color = generator(c / numIndexes);
       res[c] = color[0] + (color[1] << 8) + (color[2] << 16) + (color[3] << 24);
     }
 
