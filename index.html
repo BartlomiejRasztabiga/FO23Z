@@ -13,11 +13,12 @@
   <!--    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />-->
   <!--    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>-->
 
-  <link rel="stylesheet" href="./PaletteControl.css"/>
+  <link rel="stylesheet" href="./styles.css"/>
 
   <script src="./Palettes.js"></script>
   <script src="./PaletteControl.js"></script>
   <script src="./MaxIterControl.js"></script>
+  <script src="./NumberControl.js"></script>
   <script src="./FractalLayer.js"></script>
 
   <style>
@@ -41,6 +42,7 @@
 
   // TODO add slider for param, numWorkers, maxIterations etc
 
+  // TODO usunac koncept layers na rzecz podawania recznego re/im?
   const layers = {
     "julia -0.74543+0.11301*i": new L.TileLayer.FractalLayer(
         paletteController,
@@ -48,43 +50,48 @@
         -0.74543,
         0.11301,
     ),
-    // TODO uncomment
-    // "julia -0.75+0.11*i": new L.TileLayer.FractalLayer(
-    //     paletteController,
-    //     numWorkers,
-    //     -0.75,
-    //     0.11,
-    // ),
-    // "julia -0.1+0.651*i": new L.TileLayer.FractalLayer(
-    //     paletteController,
-    //     numWorkers,
-    //     -0.1,
-    //     0.651,
-    // ),
-    // "julia -0.4+0.6*i": new L.TileLayer.FractalLayer(
-    //     paletteController,
-    //     numWorkers,
-    //     -0.4,
-    //     0.6,
-    // ),
-    // "julia -0.8+0.156*i": new L.TileLayer.FractalLayer(
-    //     paletteController,
-    //     numWorkers,
-    //     -0.8,
-    //     0.156,
-    // ),
-    // "julia -1.118484848+0.273636364*i": new L.TileLayer.FractalLayer(
-    //     paletteController,
-    //     numWorkers,
-    //     -1.118484848,
-    //     0.273636364,
-    // ),
-    // "julia  -0.37+0.6*i": new L.TileLayer.FractalLayer(
-    //     paletteController,
-    //     numWorkers,
-    //     -0.37,
-    //     0.6,
-    // ),
+    "julia -0.75+0.11*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        -0.75,
+        0.11,
+    ),
+    "julia -0.1+0.651*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        -0.1,
+        0.651,
+    ),
+    "julia -0.4+0.6*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        -0.4,
+        0.6,
+    ),
+    "julia -0.8+0.156*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        -0.8,
+        0.156,
+    ),
+    "julia -1.118484848+0.273636364*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        -1.118484848,
+        0.273636364,
+    ),
+    "julia -0.37+0.6*i": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        -0.37,
+        0.6,
+    ),
+    "julia custom": new L.TileLayer.FractalLayer(
+        paletteController,
+        numWorkers,
+        0,
+        0,
+    ),
   };
 
   L.control
@@ -94,7 +101,8 @@
   map
   .setView([0, -90], 2)
   .addControl(new PaletteControl(layers, {position: "topleft"}))
-  .addControl(new MaxIterControl(layers, {position: "topleft"}));
+  .addControl(new MaxIterControl(layers, {position: "topleft"}))
+  .addControl(new NumberControl(layers, {position: "topleft"}));
 </script>
 </body>
 </html>

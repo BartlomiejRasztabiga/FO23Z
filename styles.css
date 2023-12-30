@@ -48,3 +48,9 @@
   background: #04AA6D; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
