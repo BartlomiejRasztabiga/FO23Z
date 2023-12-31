@@ -131,7 +131,6 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     }
   },
 
-  // TODO cos nie bangla
   setCr: function (cr) {
     this.cr = cr;
 
@@ -142,7 +141,6 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     }
   },
 
-  // TODO cos nie bangla
   setCi: function (ci) {
     this.ci = ci;
 
@@ -153,7 +151,6 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     }
   },
 
-  // TODO po co?
   _sendPalette: function () {
     if (this._paletteSent || !this._workers.length || !this._paletteName) {
       return;

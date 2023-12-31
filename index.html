@@ -36,11 +36,11 @@
 <div id="map"></div>
 
 <script type="text/javascript">
-  const map = L.map("map", {minZoom: 1});
+  const map = L.map("map", {minZoom: 1, maxZoom: 20});
 
-  const numWorkers = 1;
+  const numWorkers = 5;
 
-  // TODO add slider for param, numWorkers, maxIterations etc
+  // TODO add slider for numWorkers?
 
   const canvas = new L.TileLayer.FractalLayer(paletteController, numWorkers)
   canvas.addTo(map);

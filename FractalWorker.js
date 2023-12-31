@@ -2,7 +2,6 @@ var palette = null;
 
 //functions return number from 0 to (maxIter-1)
 function julia(cx, cy, maxIter, cr, ci) {
-  // TODO jakie to ma znaczenie skoro zwracane jest iter?
   let iter;
   let xn;
   let yn;
@@ -12,7 +11,6 @@ function julia(cx, cy, maxIter, cr, ci) {
     xn = x * x - y * y + cr;
     yn = x * y * 2 + ci;
 
-    // TODO po co to?
     if (xn * xn + yn * yn > 4) {
       break;
     }
@@ -25,7 +23,7 @@ function julia(cx, cy, maxIter, cr, ci) {
 
 const commands = {
   palette: function (data, cb) {
-    palette = new Uint32Array(data.palette); // TODO po co? czy mjest palette
+    palette = new Uint32Array(data.palette);
   },
   render: function (data, cb) {
     if (!palette) {
