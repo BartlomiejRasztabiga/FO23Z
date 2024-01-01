@@ -1,4 +1,4 @@
-var PaletteControl = L.Control.extend({
+const PaletteControl = L.Control.extend({
   options: {
     initPalette: "hsv",
   },
@@ -9,21 +9,21 @@ var PaletteControl = L.Control.extend({
 
   onAdd: function (map) {
     // create the control container with a particular class name
-    var container = L.DomUtil.create(
+    const container = L.DomUtil.create(
         "div",
         "leaflet-control-layers leaflet-control-layers-expanded",
     );
-    var _this = this;
+    const _this = this;
 
-    var title = document.createElement("span");
+    const title = document.createElement("span");
     title.innerHTML = "Palette ";
 
-    var buttonsContainer = L.DomUtil.create("div", "fractal-palette-buttons");
+    const buttonsContainer = L.DomUtil.create("div", "fractal-palette-buttons");
 
     this._buttons = [];
 
     paletteController.forEach(function (paletteName) {
-      var paletteButton = L.DomUtil.create(
+      const paletteButton = L.DomUtil.create(
           "button",
           "fractal-palette-button",
           buttonsContainer,

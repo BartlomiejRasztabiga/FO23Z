@@ -10,7 +10,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     this._colorController = colorController;
 
     this.messages = {};
-    this.queue = { total: numWorkers };
+    this.queue = {total: numWorkers};
     this.cr = 0;
     this.ci = 0;
     this.maxIter = 500;
@@ -35,7 +35,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
           return;
         }
 
-        var canvas;
+        let canvas;
         if (_this.queue.len) {
           _this.queue.len--;
           next = _this.queue.tiles.shift();
@@ -49,9 +49,9 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
           return;
         }
 
-        var array = new Uint8Array(e.data.pixels);
-        var ctx = canvas.getContext("2d", { willReadFrequently: true });
-        var imagedata = ctx.getImageData(0, 0, 256, 256);
+        const array = new Uint8Array(e.data.pixels);
+        const ctx = canvas.getContext("2d", {willReadFrequently: true});
+        const imagedata = ctx.getImageData(0, 0, 256, 256);
         imagedata.data.set(array);
         ctx.putImageData(imagedata, 0, 0);
         _this.tileDrawn(canvas);
@@ -63,8 +63,8 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 
     this.on("tileunload", function (e) {
       if (e.tile._tileIndex) {
-        var pos = e.tile._tileIndex;
-        var tileID = [pos.x, pos.y, pos.z].join(":");
+        const pos = e.tile._tileIndex;
+        const tileID = [pos.x, pos.y, pos.z].join(":");
         if (tileID in _this.messages) {
           delete _this.messages[tileID];
         }
@@ -72,12 +72,12 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     });
 
     map.on(
-      "zoomstart",
-      function () {
-        this.queue.len = 0;
-        this.queue.tiles = [];
-      },
-      this,
+        "zoomstart",
+        function () {
+          this.queue.len = 0;
+          this.queue.tiles = [];
+        },
+        this,
     );
 
     return L.TileLayer.Canvas.prototype.onAdd.call(this, map);
@@ -151,32 +151,43 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
     }
   },
 
+  setCrCi: function (cr, ci) {
+    this.cr = cr;
+    this.ci = ci;
+
+    this.queue.len = 0;
+    this.queue.tiles = [];
+    if (this._map) {
+      this.redraw();
+    }
+  },
+
   _sendPalette: function () {
     if (this._paletteSent || !this._workers.length || !this._paletteName) {
       return;
     }
 
     const palette = this._colorController.getPaletteAsBuffer(
-      this._paletteName,
-      this.maxIter,
+        this._paletteName,
+        this.maxIter,
     );
-    for (let w = 0; w < this.numWorkers; w++) {
+    this._workers.forEach((worker) => {
       const paletteClone = palette.slice(0);
-      this._workers[w].postMessage(
-        {
-          command: "palette",
-          palette: paletteClone,
-        },
-        [paletteClone],
+      worker.postMessage(
+          {
+            command: "palette",
+            palette: paletteClone,
+          },
+          [paletteClone],
       );
-    }
+    });
 
     this._paletteSent = true;
   },
 
   _renderTile: function (canvas, tilePoint, workerID) {
     const z = this._map.getZoom();
-    canvas._tileIndex = { x: tilePoint.x, y: tilePoint.y, z: z };
+    canvas._tileIndex = {x: tilePoint.x, y: tilePoint.y, z: z};
     const tileID = tilePoint.x + ":" + tilePoint.y + ":" + z;
     this.messages[tileID] = canvas;
     this._workers[workerID].postMessage({

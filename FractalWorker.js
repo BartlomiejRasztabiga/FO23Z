@@ -1,4 +1,4 @@
-var palette = null;
+let palette = null;
 
 //functions return number from 0 to (maxIter-1)
 function julia(cx, cy, maxIter, cr, ci) {
@@ -31,12 +31,12 @@ const commands = {
       return;
     }
 
-    let scale = Math.pow(2, data.z - 1);
-    let x0 = data.x / scale - 1;
-    let y0 = data.y / scale - 1;
-    let d = 1 / (scale << 8);
-    let pixels = new Array(65536);
-    let MAX_ITER = data.maxIter;
+    const scale = Math.pow(2, data.z - 1);
+    const x0 = data.x / scale - 1;
+    const y0 = data.y / scale - 1;
+    const d = 1 / (scale << 8);
+    const pixels = new Array(65536);
+    const MAX_ITER = data.maxIter;
     let cx;
     let cy;
     let iter;

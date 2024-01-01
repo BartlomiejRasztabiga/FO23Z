@@ -26,7 +26,7 @@ const NumberControl = L.Control.extend({
         inputRe,
         "change",
         function () {
-          this._update(inputRe.value, "re");
+          this._canvas.setCr(+inputRe.value);
         },
         this,
     );
@@ -39,7 +39,7 @@ const NumberControl = L.Control.extend({
         inputIm,
         "change",
         function () {
-          this._update(inputIm.value, "im");
+          this._canvas.setCi(+inputIm.value);
         },
         this,
     );
@@ -56,6 +56,10 @@ const NumberControl = L.Control.extend({
       {re: -0.8, im: 0.156},
       {re: -1.118484848, im: 0.273636364},
       {re: -0.37, im: 0.6},
+      {re: 0.285, im: 0.01},
+      {re: -0.70176, im: -0.3842},
+      {re: 0, im: -0.8},
+      {re: 0.355, im: 0.355},
     ];
 
     const _this = this;
@@ -73,8 +77,7 @@ const NumberControl = L.Control.extend({
           predefinedJulia,
           "click",
           function () {
-            _this._update(predefinedJulia.re, "re");
-            _this._update(predefinedJulia.im, "im");
+            this._canvas.setCrCi(predefinedJulia.re, predefinedJulia.im)
           },
           _this,
       );
@@ -82,13 +85,5 @@ const NumberControl = L.Control.extend({
     });
 
     return container;
-  },
-
-  _update: function (value, type) {
-    if (type === "re") {
-      this._canvas.setCr(+value);
-    } else {
-      this._canvas.setCi(+value);
-    }
   },
 });
