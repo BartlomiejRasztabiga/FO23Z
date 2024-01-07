@@ -1,19 +1,17 @@
 let palette = null;
 
-importScripts("http://unpkg.com/complex.js@2.1.1")
-
 //functions return number from 0 to (maxIter-1)
 function julia(cx, cy, maxIter, cr, ci) {
-  let z = new Complex(cx, cy);
-
   for (let iter = 0; iter < maxIter; iter++) {
-    let newZ = z.pow(2, 0).add(cr, ci)
+    let xn = cx * cx - cy * cy + cr;
+    let yn = cx * cy * 2 + ci;
 
-    if (newZ.abs() > 2) {
+    if (xn * xn + yn * yn > 4) {
       return iter;
     }
 
-    z = newZ;
+    cx = xn;
+    cy = yn;
   }
 
   return maxIter;
