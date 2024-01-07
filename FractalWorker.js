@@ -2,19 +2,23 @@ let palette = null;
 
 //functions return number from 0 to (maxIter-1)
 function julia(cx, cy, maxIter, cr, ci) {
-  for (let iter = 0; iter < maxIter; iter++) {
-    let xn = cx * cx - cy * cy + cr;
-    let yn = cx * cy * 2 + ci;
+  let iter;
+  let xn;
+  let yn;
+  let x = cx;
+  let y = cy;
+  for (iter = 0; iter < maxIter; iter++) {
+    xn = x * x - y * y + cr;
+    yn = x * y * 2 + ci;
 
     if (xn * xn + yn * yn > 4) {
-      return iter;
+      break;
     }
-
-    cx = xn;
-    cy = yn;
+    x = xn;
+    y = yn;
   }
 
-  return maxIter;
+  return iter;
 }
 
 const commands = {
