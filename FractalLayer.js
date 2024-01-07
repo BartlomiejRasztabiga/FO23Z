@@ -84,12 +84,9 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
   },
   onRemove: function (map) {
     this.messages = {};
-    const len = this._workers.length;
-    let i = 0;
-    while (i < len) {
-      this._workers[i].terminate();
-      i++;
-    }
+    this._workers.forEach((worker) => {
+      worker.terminate();
+    });
     this._workers = [];
     this._paletteSent = false;
     return L.TileLayer.Canvas.prototype.onRemove.call(this, map);
