@@ -3,19 +3,19 @@ let palette = null;
 //functions return number from 0 to (maxIter-1)
 function julia(cx, cy, maxIter, cr, ci) {
   let iter;
+
   let xn;
   let yn;
-  let x = cx;
-  let y = cy;
+
   for (iter = 0; iter < maxIter; iter++) {
-    xn = x * x - y * y + cr;
-    yn = x * y * 2 + ci;
+    xn = cx * cx - cy * cy + cr;
+    yn = cx * cy * 2 + ci;
 
     if (xn * xn + yn * yn > 4) {
       break;
     }
-    x = xn;
-    y = yn;
+    cx = xn;
+    cy = yn;
   }
 
   return iter;
