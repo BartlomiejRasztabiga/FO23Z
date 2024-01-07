@@ -1,6 +1,6 @@
 const PaletteControl = L.Control.extend({
   options: {
-    initPalette: "green",
+    initPalette: "hsv",
   },
   initialize: function (canvas, options) {
     L.setOptions(this, options);

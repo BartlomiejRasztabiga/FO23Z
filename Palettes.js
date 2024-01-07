@@ -1,53 +1,52 @@
 const paletteController = {
   //each generator receives index from 0 to 1 and return RGBA values (as array of 4 numbers 0<= x <= 255)
   _paletteGenerators: {
-    // hsv: function (colorIndex) {
-    //   let h = colorIndex * 360;
-    //   const s = 1 - colorIndex < 1e-2 ? 0 : 0.75;
-    //   //from http://schinckel.net/2012/01/10/hsv-to-rgb-in-javascript/
-    //   const v = 0.75 * 255;
-    //   const vi = Math.floor(v);
-    //   let rgb,
-    //       i,
-    //       data = [];
-    //   if (s === 0) {
-    //     rgb = [
-    //       Math.floor(0.75 * 255),
-    //       Math.floor(0.1875 * 255),
-    //       Math.floor(0.75 * 255),
-    //     ];
-    //   } else {
-    //     h = h / 60;
-    //     i = Math.floor(h);
-    //     data = [
-    //       Math.floor(v * (1 - s)),
-    //       Math.floor(v * (1 - s * (h - i))),
-    //       Math.floor(v * (1 - s * (1 - (h - i)))),
-    //     ];
-    //     switch (i) {
-    //       case 0:
-    //         rgb = [vi, data[2], data[0]];
-    //         break;
-    //       case 1:
-    //         rgb = [data[1], vi, data[0]];
-    //         break;
-    //       case 2:
-    //         rgb = [data[0], vi, data[2]];
-    //         break;
-    //       case 3:
-    //         rgb = [data[0], data[1], vi];
-    //         break;
-    //       case 4:
-    //         rgb = [data[2], data[0], vi];
-    //         break;
-    //       default:
-    //         rgb = [vi, data[0], data[1]];
-    //         break;
-    //     }
-    //   }
-    //   rgb[3] = 255;
-    //   return rgb;
-    // },
+    hsv: function (colorIndex) {
+      let h = colorIndex * 360;
+      const s = 1 - colorIndex < 1e-2 ? 0 : 0.75;
+      //from http://schinckel.net/2012/01/10/hsv-to-rgb-in-javascript/
+      const v = 0.75 * 255;
+      const vi = Math.floor(v);
+      let rgb, i
+      let data = [];
+      if (s === 0) {
+        rgb = [
+          Math.floor(0.75 * 255),
+          Math.floor(0.1875 * 255),
+          Math.floor(0.75 * 255),
+        ];
+      } else {
+        h = h / 60;
+        i = Math.floor(h);
+        data = [
+          Math.floor(v * (1 - s)),
+          Math.floor(v * (1 - s * (h - i))),
+          Math.floor(v * (1 - s * (1 - (h - i)))),
+        ];
+        switch (i) {
+          case 0:
+            rgb = [vi, data[2], data[0]];
+            break;
+          case 1:
+            rgb = [data[1], vi, data[0]];
+            break;
+          case 2:
+            rgb = [data[0], vi, data[2]];
+            break;
+          case 3:
+            rgb = [data[0], data[1], vi];
+            break;
+          case 4:
+            rgb = [data[2], data[0], vi];
+            break;
+          default:
+            rgb = [vi, data[0], data[1]];
+            break;
+        }
+      }
+      rgb[3] = 255;
+      return rgb;
+    },
     green: function (colorIndex) {
       return [0, Math.floor(colorIndex * 255), 0, 255];
     },

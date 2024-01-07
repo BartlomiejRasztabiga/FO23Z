@@ -38,7 +38,7 @@
 <script type="text/javascript">
   const map = L.map("map", {minZoom: 1, maxZoom: 20});
 
-  const numWorkers = 5;
+  const numWorkers = 10;
 
   const canvas = new L.TileLayer.FractalLayer(paletteController, numWorkers)
   canvas.addTo(map);
