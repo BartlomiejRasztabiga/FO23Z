@@ -8,7 +8,6 @@ const MaxIterControl = L.Control.extend({
   },
 
   onAdd: function (map) {
-    // create the control container with a particular class name
     const container = L.DomUtil.create(
         "div",
         "leaflet-control-layers leaflet-control-layers-expanded",

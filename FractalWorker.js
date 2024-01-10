@@ -1,6 +1,5 @@
 let palette = null;
 
-//functions return number from 0 to (maxIter-1)
 function julia(cx, cy, maxIter, cr, ci) {
   let iter, xn, yn;
 

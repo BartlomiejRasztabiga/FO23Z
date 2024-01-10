@@ -1,10 +1,8 @@
 const paletteController = {
-  //each generator receives index from 0 to 1 and return RGBA values (as array of 4 numbers 0<= x <= 255)
   _paletteGenerators: {
     hsv: function (colorIndex) {
       let h = colorIndex * 360;
       const s = 1 - colorIndex < 1e-2 ? 0 : 0.75;
-      //from http://schinckel.net/2012/01/10/hsv-to-rgb-in-javascript/
       const v = 0.75 * 255;
       const vi = Math.floor(v);
       let rgb, i
