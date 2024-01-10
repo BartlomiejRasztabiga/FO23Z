@@ -28,7 +28,7 @@ L.TileLayer.FractalLayer = L.TileLayer.Canvas.extend({
 
     while (i < this.numWorkers) {
       this.queue.free.push(i);
-      this._workers[i] = new Worker("FractalWorker.js");
+      this._workers[i] = new Worker("worker.js");
 
       this._workers[i].onmessage = function (e) {
         if (!e.data) {
