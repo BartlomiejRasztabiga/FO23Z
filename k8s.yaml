@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: fo
-          image: rasztabigab/fo:0.0.4
+          image: rasztabigab/fo:0.0.6
           ports:
             - containerPort: 3000
 ---
